@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NPC Translator</title>
+
+  <meta name="theme-color" content="#0f0f17">
+  <meta name="description" content="Traduttore offline-first multilingua con OCR, dettatura e sintesi vocale">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+  <link rel="stylesheet" href="/src/styles.css">
+
+  <!-- Preconnect solo a servizi essenziali -->
+  <link rel="preconnect" href="https://translate.googleapis.com" crossorigin>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>NPC Translator</h1>
+    </header>
+
+    <section class="controls">
+      <div class="lang-row">
+        <select id="fromLang" aria-label="Lingua sorgente">
+          <option value="auto">Rileva automaticamente</option>
+          <option value="en">Inglese</option>
+          <option value="it">Italiano</option>
+          <option value="fr">Francese</option>
+          <option value="de">Tedesco</option>
+          <option value="es">Spagnolo</option>
+          <option value="zh-CN">Cinese</option>
+          <!-- aggiungi le altre lingue che ti servono -->
+        </select>
+
+        <button id="swapLang" aria-label="Inverti lingue">↔</button>
+
+        <select id="toLang" aria-label="Lingua destinazione">
+          <option value="it">Italiano</option>
+          <option value="en">Inglese</option>
+          <!-- ... -->
+        </select>
+      </div>
+
+      <div class="options-row">
+        <label><input type="checkbox" id="liveTranslate"> Traduzione live</label>
+        <label><input type="checkbox" id="autoFileTranslate"> Traduci file subito</label>
+      </div>
+    </section>
+
+    <div class="editor-grid">
+      <div class="editor-panel">
+        <textarea id="input" placeholder="Scrivi, incolla, parla o trascina file..." aria-label="Testo sorgente"></textarea>
+        <div class="meta">
+          <span id="inputStats">0 caratteri · 0 parole</span>
+          <div class="actions">
+            <button id="micBtn" aria-label="Dettatura vocale">🎤 Dettatura</button>
+            <button id="ocrBtn" aria-label="OCR da immagine">📷 OCR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-panel">
+        <textarea id="output" readonly placeholder="Traduzione..." aria-live="polite" aria-label="Testo tradotto"></textarea>
+        <div class="meta">
+          <span id="outputStats">0 caratteri · 0 parole</span>
+          <div class="actions">
+            <button id="speakBtn" aria-label="Leggi ad alta voce">🔊 Ascolta</button>
+            <button id="stopSpeakBtn" aria-label="Ferma lettura">⏹ Stop</button>
+            <button id="copyBtn" aria-label="Copia traduzione">📋 Copia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button id="translateBtn">Traduci</button>
+      <button id="abortBtn" hidden>Annulla</button>
+      <button id="clearBtn">Pulisci</button>
+      <div class="export-menu">
+        <button id="exportBtn">Esporta ▼</button>
+        <menu class="dropdown-content" hidden>
+          <button data-format="txt">TXT</button>
+          <button data-format="pdf">PDF</button>
+          <button data-format="docx">DOCX</button>
+          <button data-format="epub">EPUB</button>
+        </menu>
+      </div>
+      <button id="batchBtn">Batch ZIP</button>
+    </div>
+
+    <div id="dropZone" class="dropzone" role="region" aria-label="Area di trascinamento file">
+      Trascina file o cartelle (PDF, DOCX, TXT, immagini…)
+      <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt,.epub,image/*" hidden>
+    </div>
+
+    <progress id="progress" max="100" value="0" hidden></progress>
+    <div id="status" role="status" aria-live="polite">Pronto</div>
+  </main>
+
+  <dialog id="glossaryDialog">
+    <h2>Glossario</h2>
+    <div id="glossaryContent"></div>
+    <form method="dialog">
+      <button type="submit">Chiudi</button>
+    </form>
+  </dialog>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

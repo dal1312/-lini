@@ -1,0 +1,24 @@
+{
+  "name": "npc-translator-2026",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "workbox": "workbox generateSW workbox-config.js"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^4.7.0",
+    "mammoth": "^1.8.0",
+    "jszip": "^3.10.1",
+    "tesseract.js": "^5.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^6.0.0",
+    "vite-plugin-pwa": "^0.21.0",
+    "workbox-cli": "^7.3.0"
+  }
+}
